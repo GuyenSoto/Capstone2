@@ -1,0 +1,18 @@
+Unnamed: 0             int64
+index                  int64
+Job Title             object
+Salary Estimate       object
+Job Description       object
+Rating               float64
+Company Name          object
+Location              object
+Headquarters          object
+Size                  object
+Founded                int64
+Type of ownership     object
+Industry              object
+Sector                object
+Revenue               object
+Competitors           object
+Easy Apply            object
+dtype: object

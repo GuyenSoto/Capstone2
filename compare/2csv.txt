@@ -1,0 +1,13 @@
+Job Title             object
+Salary Estimate       object
+Job Description       object
+Rating               float64
+Company Name          object
+Location              object
+Size                  object
+Founded                int64
+Type of ownership     object
+Industry              object
+Sector                object
+Revenue               object
+dtype: object

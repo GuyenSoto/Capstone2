@@ -1,0 +1,72 @@
+
+Differences between 1csv and 2csv
+In 1csv not in 2csv
+Headquarters          object
+Competitors           object
+hourly                 int64
+employer_provided      int64
+min_salary             int64
+max_salary             int64
+avg_salary           float64
+company_txt           object
+job_state             object
+same_state             int64
+age                    int64
+python_yn              int64
+R_yn                   int64
+spark                  int64
+aws                    int64
+excel                  int64
+
+Differences between 1csv and 3csv
+In 1 csv not in 3csv
+hourly                 int64
+employer_provided      int64
+min_salary             int64
+max_salary             int64
+avg_salary           float64
+company_txt           object 	
+
+En 1csv:lists=['Headquarters','Competitors','hourly','employer_provided','min_salary','max_salary','avg_salary','company_txt','job_state','same_state','age','python_yn','R_yn','spark','aws','excel']
+
+job_state             object
+same_state             int64
+age                    int64
+python_yn              int64
+R_yn                   int64
+spark                  int64
+aws                    int64
+excel                  int64
+
+In 3 csv not in 1csv
+Unnamed: 0             int64
+index                  int64
+Easy Apply            object
+
+En 3csv: listb=['Unnamed','index','Easy Apply','Headquarters','Competitors','Easy Apply']
+
+
+Differences between 2csv and 3csv
+
+In 3 csv not in 2csv
+Unnamed: 0             int64
+index                  int64
+Headquarters          object
+Competitors           object
+Easy Apply            object
+
+Que campos quitar?
+
+Que campos dejar?
+1)Job Title
+2)Salary Estimate
+3)Job Description
+4)Rating
+5)Company Name
+6)Location
+7)Size
+8)Founded
+9)Type of ownership
+
+
+
