@@ -1,0 +1,179 @@
+Feature engineering:
+
+State			NM		MD		FL		WA		NY
+City			Albuquerque	Linthicum	Clearwater	Richland	New York
+Rating			3.8		3.4		4.8		3.8		2.9
+Ave_Salary		72.0		87.5		85.0		76.5		114.5
+Founded_Years		48.0		37.0		11.0		56.0		23.0
+Max_Company_Size	1000.0		10000.0		1000.0		5000.0		200.0
+Highest_Revenue		100		5		500		1		1
+Max_USD_Revenue		100000000	5000000000	500000000	1000000000	1.0
+Python_knowledge	1		1		1		1		1
+MatLab_knowledge	1		0		0		0		0
+PowerBI_knowledge	1		0		0		0		0
+SQL_knowledge		0		0		1		0		1
+ETL_knowledge		0		0		0		0		0
+Math_knowledge		1		1		1		1		1
+Work_Remote		0		0		0		0		0
+GitHub_works		0		0		0		0		0
+DataB_knowledge		1		1		0		0		1
+jobs_per_state		3		41		94		23		86
+state_ave_salary	74.33		97.35		79.96		95.54		99.21
+state_total_Rating	3.6		3.61		3.46		3.8		3.59
+state_total_Revenue	1366666666	3017195122	1281648936	1417826087	2585534884
+state_total_Company	7000.0		3969.51		2814.46		4713.04		4416.29
+state_total_Python	3		14		32		10		56
+state_total_Sql		0		6		60		6		51
+state_total_DataB	3		21		47		5		35
+state_total_Math	1		16		30		15		42
+
+
+Metrics:
+	R-squared, or coefficient of determination
+
+		#Calculate the R^2 
+		def r_squared(y, ypred):
+   		 """R-squared score.
+    
+    		Calculate the R-squared, or coefficient of determination, of the input.
+    
+    		Arguments:
+    		y -- the observed values
+    		ypred -- the predicted values
+    		"""
+    		ybar = np.sum(y) / len(y) #yes, we could use np.mean(y)
+    		sum_sq_tot = np.sqrt((y - ybar)**2) #total sum of squares error
+    		sum_sq_res = np.sqrt((y - ypred)**2) #residual sum of squares error
+    		R2 = 1.0 - sum_sq_res /sum_sq_tot
+    		return R2
+
+		y_tr_pred_ = train_mean * np.ones(len(y_train))
+		y_tr_pred_[:5] = array([104.29625468, 104.29625468, 104.29625468, 104.29625468,104.29625468])
+		sklearn dummy regressor:
+			dumb_reg = DummyRegressor(strategy='mean')
+			dumb_reg.fit(X_train, y_train)
+			dumb_reg.constant_  = array([[104.29625468]])
+			y_tr_pred = dumb_reg.predict(X_train)
+			y_tr_pred[:5] =array([104.29625468, 104.29625468, 104.29625468, 104.29625468,104.29625468])
+		r_squared(y_train, y_tr_pred)
+		y_te_pred = train_mean * np.ones(len(y_test))
+		r_squared(y_test, y_te_pred)
+		
+	Mean Absolute Error
+
+
+		#Calculate the MAE as defined above
+		def mae(y, ypred):
+    		"""Mean absolute error.
+    
+    		Calculate the mean absolute error of the arguments
+
+    		Arguments:
+    		y -- the observed values
+    		ypred -- the predicted values
+    		"""
+   		 abs_error = np.abs(y - ypred)
+   		 mae = np.mean(abs_error)
+    		return mae
+
+		mae(y_train, y_tr_pred) = 30.359090182216047
+		mae(y_test, y_te_pred) = 32.057038745236596
+
+	Mean Squared Error
+
+		def mse(y, ypred):
+    		"""Mean square error.
+    
+    		Calculate the mean square error of the arguments
+
+    		Arguments:
+    		y -- the observed values
+    		ypred -- the predicted values
+    		"""
+    		sq_error = (y - ypred)**2
+    		mse = np.mean(sq_error)
+    		return mse
+
+		mse(y_train, y_tr_pred) = 1368.4963155606076
+		mse(y_test, y_te_pred) = 1554.788201391459
+		np.sqrt([mse(y_train, y_tr_pred), mse(y_test, y_te_pred)]) = array([36.99319283, 39.4308027 ])
+
+sklearn metrics		
+	R-squared
+		r2_score(y_train, y_tr_pred), r2_score(y_test, y_te_pred) = (0.0, -0.00011290866771029862)
+
+	Mean absolute error
+		mean_absolute_error(y_train, y_tr_pred), mean_absolute_error(y_test, y_te_pred) = (30.359090182216054, 32.057038745236575)
+	
+	Mean squared error
+		mean_squared_error(y_train, y_tr_pred), mean_squared_error(y_test, y_te_pred) = (1368.4963155606056, 1554.7882013914575)
+
+	
+
+Refining The Linear Model		
+	Hyperparameter search using GridSearchCV
+		Parameters:
+		task18
+		Call `pipe`'s `get_params()` method to get a dict of available parameters and print their names
+		using dict's `keys()` method	
+		pipe.get_params().keys()
+		dict_keys(['memory', 'steps', 'verbose', 'simpleimputer', 'standardscaler', 'selectkbest', 'linearregression', 'simpleimputer__add_indicator', 					'simpleimputer__copy', 'simpleimputer__fill_value', 'simpleimputer__missing_values', 'simpleimputer__strategy', 'simpleimputer__verbose', 					'standardscaler__copy', 'standardscaler__with_mean', 'standardscaler__with_std', 'selectkbest__k', 'selectkbest__score_func', 'linearregression__copy_X', 			'linearregression__fit_intercept', 'linearregression__n_jobs', 'linearregression__normalize', 'linearregression__positive'])
+		
+		lr_grid_cv.best_params_ = {'selectkbest__k': 12}
+
+		Get the linear model coefficients from the `coef_` attribute and store in `coefs`,
+		get the matching feature names from the column names of the dataframe,
+		and display the results as a pandas Series with `coefs` as the values and `features` as the index,
+		sorting the values in descending order
+
+		coefs = lr_grid_cv.best_estimator_.named_steps.linearregression.coef_
+		features = X_train.columns[selected]
+		pd.Series(coefs, index=features).sort_values(ascending=False)
+
+		state_ave_salary       16.866383
+		jobs_per_state         11.514199
+		Python_knowledge        4.900777
+		Max_USD_Revenue         3.439151
+		Rating                  1.501636
+		state_total_Math        0.075400
+		state_total_Rating     -0.584276
+		Max_Company_Size       -0.886241
+		state_total_Revenue    -1.204236
+		Highest_Revenue        -1.345250
+		Work_Remote            -2.134306
+		state_total_Python    -12.124671
+
+Random Forest Model
+	
+	Hyperparameter search using GridSearchCV
+		n_est = [int(n) for n in np.logspace(start=1, stop=3, num=20)]
+		grid_params = {
+	        'randomforestregressor__n_estimators': n_est,
+        	'standardscaler': [StandardScaler(), None],
+	        'simpleimputer__strategy': ['mean', 'median']
+		}
+		grid_params
+		{'randomforestregressor__n_estimators': [10, 12, 16, 20, 26, 33, 42, 54, 69, 88, 112, 143, 183, 233, 297, 379, 483, 615, 784, 1000],
+		 'standardscaler': [StandardScaler(), None],
+		 'simpleimputer__strategy': ['mean', 'median']}
+		
+		rf_grid_cv.best_params_ = {'randomforestregressor__n_estimators': 1000,
+ 		'simpleimputer__strategy': 'mean',
+ 		'standardscaler': StandardScaler()}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
